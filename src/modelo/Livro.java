@@ -1,5 +1,12 @@
 package modelo;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Livro {
+    
+    @Id
     Long id;
     String titulo;
     String autor;
