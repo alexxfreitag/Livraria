@@ -129,18 +129,20 @@ public class LoginGUI extends javax.swing.JFrame {
        
         try{
             if (login.validaLogin(usuario.getText(), senha.getText())) {
-                //vai pra proxima tela
+                //vai pra tela de exibição de livros cadastradps
+                EstanteGUI estante = new EstanteGUI();
                 this.setVisible(false);
+                estante.setLocationRelativeTo(null); //programa inicia no meio da tela
+                estante.setVisible(true);
                 
             } else {
-                System.out.println(" não logou");
                 JOptionPane.showMessageDialog(rootPane, "Atenção! Usuário e/ou senha incorretos!");
                 usuario.setText("");
                 senha.setText("");
                 usuario.requestFocusInWindow(); //volta o foco para o campo de usuario
             }
         } catch (Exception e){
-            JOptionPane.showMessageDialog(rootPane, ""+e);
+            JOptionPane.showMessageDialog(rootPane, "Teste"+e);
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 

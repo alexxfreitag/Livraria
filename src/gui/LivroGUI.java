@@ -43,7 +43,7 @@ public class LivroGUI extends javax.swing.JFrame {
         editora = new javax.swing.JTextField();
         cmdCadastrar = new javax.swing.JButton();
         cmdLimpar = new javax.swing.JButton();
-        cmdSair = new javax.swing.JButton();
+        cmdVoltar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -145,11 +145,11 @@ public class LivroGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        cmdSair.setText("Sair");
-        cmdSair.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        cmdSair.addActionListener(new java.awt.event.ActionListener() {
+        cmdVoltar.setText("Voltar");
+        cmdVoltar.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        cmdVoltar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmdSairActionPerformed(evt);
+                cmdVoltarActionPerformed(evt);
             }
         });
 
@@ -167,7 +167,7 @@ public class LivroGUI extends javax.swing.JFrame {
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(91, 91, 91)
-                        .addComponent(cmdSair)))
+                        .addComponent(cmdVoltar)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -178,7 +178,7 @@ public class LivroGUI extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(cmdSair)
+                .addComponent(cmdVoltar)
                 .addContainerGap())
         );
 
@@ -214,10 +214,14 @@ public class LivroGUI extends javax.swing.JFrame {
         
     }//GEN-LAST:event_cmdCadastrarActionPerformed
 
-    private void cmdSairActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdSairActionPerformed
+    private void cmdVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdVoltarActionPerformed
         // TODO add your handling code here:
-        System.exit(0);
-    }//GEN-LAST:event_cmdSairActionPerformed
+        // volta para a tela anterior
+        EstanteGUI estante = new EstanteGUI();
+        this.setVisible(false);
+        estante.setLocationRelativeTo(null); //programa inicia no meio da tela
+        estante.setVisible(true);
+    }//GEN-LAST:event_cmdVoltarActionPerformed
 
     private void cmdLimparActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmdLimparActionPerformed
         // TODO add your handling code here:
@@ -281,7 +285,7 @@ public class LivroGUI extends javax.swing.JFrame {
     private javax.swing.JTextField autor;
     private javax.swing.JButton cmdCadastrar;
     private javax.swing.JButton cmdLimpar;
-    private javax.swing.JButton cmdSair;
+    private javax.swing.JButton cmdVoltar;
     private javax.swing.JTextField editora;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

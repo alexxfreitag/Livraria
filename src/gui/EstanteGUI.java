@@ -5,17 +5,28 @@
  */
 package gui;
 
+import dao.LivroDAO;
+import factory.ConnectionFactory;
+import factory.ModeloTabela;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import javax.swing.JOptionPane;
+import javax.swing.ListSelectionModel;
+
 /**
  *
  * @author Alex
  */
 public class EstanteGUI extends javax.swing.JFrame {
 
+    ConnectionFactory conexao = new ConnectionFactory();
     /**
      * Creates new form EstanteGUI
      */
     public EstanteGUI() {
         initComponents();
+        conexao.getConnection();
+        preencherTabela("SELECT * FROM livro ORDER BY id");
     }
 
     /**
@@ -27,22 +38,108 @@ public class EstanteGUI extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable = new javax.swing.JTable();
+        cadastroLivros = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("LIVROS");
+
+        jTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+
+            }
+        ));
+        jScrollPane1.setViewportView(jTable);
+
+        cadastroLivros.setText("Cadastrar Livros");
+        cadastroLivros.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cadastroLivrosActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(cadastroLivros)
+                .addGap(250, 250, 250))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(cadastroLivros)
+                .addGap(15, 15, 15))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void cadastroLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroLivrosActionPerformed
+        // TODO add your handling code here:
+        LivroGUI livro = new LivroGUI();
+        this.setVisible(false);
+        livro.setLocationRelativeTo(null); //programa inicia no meio da tela
+        livro.setVisible(true);
+    }//GEN-LAST:event_cadastroLivrosActionPerformed
+    
+    public void preencherTabela(String SQL){
+        ArrayList dados = new ArrayList();
+        LivroDAO livro = new LivroDAO();
+        System.out.println("teste 8");
+        String[] Colunas = new String[]{"ID", "Título", "Autor", "Ano", "Editora"};
+        livro.consultaTudo();
+        System.out.println("teste 10");
+        try {
+            livro.rs.first();
+            
+            int cont = 0;
+            do {
+                cont = cont +1;
+                System.out.println("cont: " + cont);
+                dados.add(new Object[]{livro.rs.getInt("id"), livro.rs.getString("titulo"), livro.rs.getString("autor"), livro.rs.getInt("ano"), livro.rs.getString("editora")});
+            } while (livro.rs.next());
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Erro ao preencher o ArrayList. " + ex);
+        }
+        System.out.println("teste 9");
+        ModeloTabela modelo = new ModeloTabela(dados, Colunas);
+        jTable.setModel(modelo);
+        jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
+        jTable.getColumnModel().getColumn(0).setResizable(false);
+        jTable.getColumnModel().getColumn(1).setPreferredWidth(176);
+        jTable.getColumnModel().getColumn(1).setResizable(false);
+        jTable.getColumnModel().getColumn(2).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(2).setResizable(false);
+        jTable.getColumnModel().getColumn(3).setPreferredWidth(70);
+        jTable.getColumnModel().getColumn(3).setResizable(false);
+        jTable.getColumnModel().getColumn(4).setPreferredWidth(150);
+        jTable.getColumnModel().getColumn(4).setResizable(false);
+        jTable.getTableHeader().setReorderingAllowed(false);
+        jTable.setAutoResizeMode(jTable.AUTO_RESIZE_OFF);
+        jTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+    }
     /**
      * @param args the command line arguments
      */
@@ -79,5 +176,9 @@ public class EstanteGUI extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton cadastroLivros;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,12 +1,16 @@
 package modelo;
+
+
 public class Usuario {
+    
+    
     Long id;
     String nome;
     String senha;
     String cpf;
     String email;
     String telefone;
-
+    
     public String getSenha() {
         return senha;
     }

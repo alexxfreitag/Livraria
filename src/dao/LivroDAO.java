@@ -3,6 +3,7 @@ import factory.ConnectionFactory;
 import modelo.Livro;
 import java.sql.*;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 public class LivroDAO { 
     
@@ -12,6 +13,7 @@ public class LivroDAO {
     String autor;
     int ano;
     String editora;
+    public ResultSet rs;
     
     public LivroDAO(){ 
         this.connection = new ConnectionFactory().getConnection();
@@ -46,6 +48,40 @@ public class LivroDAO {
             throw new RuntimeException(u);
         } 
         
+    }
+    
+    public void consultaTudo(){ 
+        String sql = "SELECT * FROM livro ";
+        try { 
+            PreparedStatement stmt = connection.prepareStatement(sql);
+            rs = stmt.executeQuery();
+            if (rs == null)
+                JOptionPane.showMessageDialog(null, "Não existem livros cadastrados!");
+            System.out.println("teste 20");
+        } 
+        catch (SQLException u) { 
+            JOptionPane.showMessageDialog(null, "Não existem livros cadastrados!");
+            
+        } 
+        
+    }
+    
+    public void cria() {
+        final String createLivro = "CREATE TABLE IF NOT EXISTS livro (\n"
+                + "id BIGINT(10) AUTO_INCREMENT,\n"
+                + "titulo VARCHAR(255),\n"
+                + "autor VARCHAR(255),\n"
+                + "ano INTEGER,\n"
+                + "editora VARCHAR(255),\n"
+                + "PRIMARY KEY (id));";
+
+        try {
+            Statement stmt = connection.createStatement();
+            stmt.execute(createLivro);
+            connection.close();
+        } catch (SQLException u) {
+            throw new RuntimeException(u);
+        }
     }
     
 }
