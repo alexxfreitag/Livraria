@@ -1,5 +1,6 @@
 package gui;
 
+import dao.LivroDAO;
 import dao.LoginDAO;
 import javax.swing.JOptionPane;
 
@@ -15,6 +16,11 @@ import javax.swing.JOptionPane;
  */
 public class LoginGUI extends javax.swing.JFrame {
 
+    
+    
+    
+    
+            
     /**
      * Creates new form HomeGUI
      */
@@ -126,10 +132,24 @@ public class LoginGUI extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         // validação do login informado
         LoginDAO login = new LoginDAO();
-       
         try{
             if (login.validaLogin(usuario.getText(), senha.getText())) {
-                //vai pra tela de exibição de livros cadastradps
+                //vai pra tela de exibição de livros cadastrados
+                LivroDAO livroBanco = new LivroDAO();
+                livroBanco.consultaTudo();
+                if (!livroBanco.rs.next()) {
+                    int opcao_escolhida = JOptionPane.showConfirmDialog(null, "Não existem livros cadastrados! Deseja adicionar?", "Escolha uma opção", 2);
+                    if (opcao_escolhida == 0){
+                        //selecionou a opção OK
+                        LivroGUI livroInterface = new LivroGUI();
+                        this.setVisible(false);
+                        livroInterface.setLocationRelativeTo(null); //programa inicia no meio da tela
+                        livroInterface.setVisible(true);
+                        return;
+                    } else {
+                        //selecionou a opção CANCELAR
+                    }
+                }
                 EstanteGUI estante = new EstanteGUI();
                 this.setVisible(false);
                 estante.setLocationRelativeTo(null); //programa inicia no meio da tela

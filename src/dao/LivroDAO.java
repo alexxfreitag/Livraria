@@ -55,12 +55,9 @@ public class LivroDAO {
         try { 
             PreparedStatement stmt = connection.prepareStatement(sql);
             rs = stmt.executeQuery();
-            if (rs == null)
-                JOptionPane.showMessageDialog(null, "Não existem livros cadastrados!");
-            System.out.println("teste 20");
         } 
         catch (SQLException u) { 
-            JOptionPane.showMessageDialog(null, "Não existem livros cadastrados!");
+            JOptionPane.showMessageDialog(null, "Não foi possível realizar a consulta!");
             
         } 
         

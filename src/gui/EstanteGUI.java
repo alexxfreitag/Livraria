@@ -20,6 +20,7 @@ import javax.swing.ListSelectionModel;
 public class EstanteGUI extends javax.swing.JFrame {
 
     ConnectionFactory conexao = new ConnectionFactory();
+    LivroGUI livroInterface = new LivroGUI();
     /**
      * Creates new form EstanteGUI
      */
@@ -98,32 +99,28 @@ public class EstanteGUI extends javax.swing.JFrame {
 
     private void cadastroLivrosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cadastroLivrosActionPerformed
         // TODO add your handling code here:
-        LivroGUI livro = new LivroGUI();
+        
         this.setVisible(false);
-        livro.setLocationRelativeTo(null); //programa inicia no meio da tela
-        livro.setVisible(true);
+        livroInterface.setLocationRelativeTo(null); //programa inicia no meio da tela
+        livroInterface.setVisible(true);
     }//GEN-LAST:event_cadastroLivrosActionPerformed
     
     public void preencherTabela(String SQL){
         ArrayList dados = new ArrayList();
-        LivroDAO livro = new LivroDAO();
-        System.out.println("teste 8");
+        LivroDAO livroBanco = new LivroDAO();
         String[] Colunas = new String[]{"ID", "Título", "Autor", "Ano", "Editora"};
-        livro.consultaTudo();
-        System.out.println("teste 10");
+        livroBanco.consultaTudo();
+        
         try {
-            livro.rs.first();
+            livroBanco.rs.first();
             
-            int cont = 0;
             do {
-                cont = cont +1;
-                System.out.println("cont: " + cont);
-                dados.add(new Object[]{livro.rs.getInt("id"), livro.rs.getString("titulo"), livro.rs.getString("autor"), livro.rs.getInt("ano"), livro.rs.getString("editora")});
-            } while (livro.rs.next());
+                dados.add(new Object[]{livroBanco.rs.getInt("id"), livroBanco.rs.getString("titulo"), livroBanco.rs.getString("autor"), livroBanco.rs.getInt("ano"), livroBanco.rs.getString("editora")});
+            } while (livroBanco.rs.next());
         } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Erro ao preencher o ArrayList. " + ex);
+            //não foi adicionado nenhuma mensagem aqui pois já é exibido o aviso de produtos não cadastros quando é logado    
         }
-        System.out.println("teste 9");
+        
         ModeloTabela modelo = new ModeloTabela(dados, Colunas);
         jTable.setModel(modelo);
         jTable.getColumnModel().getColumn(0).setPreferredWidth(50);
